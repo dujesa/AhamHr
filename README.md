@@ -1,2 +1,2 @@
 # AhamHr
-Dump IC cup app.
+App for Dump internship IC cup contest.
