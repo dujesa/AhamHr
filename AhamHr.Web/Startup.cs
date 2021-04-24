@@ -1,4 +1,6 @@
 using AhamHr.Data.Entities;
+using AhamHr.Domain.Repositories.Implementations;
+using AhamHr.Domain.Repositories.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
@@ -29,6 +31,10 @@ namespace AhamHr.Web
                 options.UseSqlServer(Configuration.GetConnectionString("AhamHrContext"))
             );
 
+            services.AddTransient<IAppointmentRepository, AppointmentRepository>();
+            services.AddTransient<IProfessorRepository, ProfessorRepository>();
+            services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<ISubjectRepository, SubjectRepository>();
 
             services.AddControllers()
                 .AddNewtonsoftJson(options =>
