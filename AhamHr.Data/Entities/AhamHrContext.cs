@@ -32,6 +32,10 @@ namespace AhamHr.Data.Entities
                 .HasValue<Professor>(UserRole.Professor)
                 .HasValue<Admin>(UserRole.Admin);
 
+            modelBuilder.Entity<Professor>()
+                .Property(p => p.Rating)
+                .HasColumnType("decimal(18,4)");
+
             modelBuilder.Entity<ProfessorSubject>()
                 .HasKey(ps => new { ps.ProfessorId, ps.SubjectId });
             modelBuilder.Entity<ProfessorSubject>()

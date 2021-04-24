@@ -13,9 +13,4 @@
     </PackageReference>
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Entities\Models\" />
-    <Folder Include="Enums\" />
-  </ItemGroup>
-
 </Project>

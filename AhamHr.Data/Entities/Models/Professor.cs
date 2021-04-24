@@ -13,6 +13,8 @@ namespace AhamHr.Data.Entities.Models
         public string Address { get; set; }
         public bool IsVerified { get; set; }
         public int MaxStudentsAppointmentCapacity { get; set; }
+        public ICollection<AvailableTermin> AvailableTermins { get; set; }
         public ICollection<Appointment> Appointments { get; set; }
+        public ICollection<ProfessorSubject> ProfessorSubjects { get; set; }
     }
 }

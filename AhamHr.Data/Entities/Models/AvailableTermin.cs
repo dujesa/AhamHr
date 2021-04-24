@@ -12,7 +12,7 @@ namespace AhamHr.Data.Entities.Models
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
         public DateTime RecurringUntil { get; set; }
-        public int? ProfessorId { get; set; }
+        public int ProfessorId { get; set; }
         public Professor Professor { get; set; }
     }
 }

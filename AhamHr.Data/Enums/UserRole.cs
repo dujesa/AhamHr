@@ -9,6 +9,7 @@ namespace AhamHr.Data.Enums
     public enum UserRole
     {
         Student,
-        Professor
+        Professor,
+        Admin
     }
 }
