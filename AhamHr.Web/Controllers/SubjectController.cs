@@ -42,8 +42,8 @@ namespace AhamHr.Web.Controllers
             return NotFound();
         }
 
-        [HttpDelete("delete/{id}")]
-        public IActionResult DeleteSubject([FromQuery] int id)
+        [HttpDelete(nameof(DeleteSubject))]
+        public IActionResult DeleteSubject([FromRoute] int id)
         {
             var wasDeleteSucessful = _subjectRepository.DeleteSubject(id);
             if (wasDeleteSucessful)

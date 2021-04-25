@@ -5,10 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AhamHr.Domain.Repositories.Interfaces
+namespace AhamHr.Domain.Services.Interfaces
 {
-    public interface IUserRepository
+    public interface IJwtService
     {
-        User GetUser(int userId);
+        string GetJwtTokenForUser(User user);
+        string GetNewToken(string token);
     }
 }

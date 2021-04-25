@@ -1,6 +1,14 @@
 using AhamHr.Data.Entities;
+using AhamHr.Data.Enums;
+using AhamHr.Domain.Models.Configurations;
 using AhamHr.Domain.Repositories.Implementations;
 using AhamHr.Domain.Repositories.Interfaces;
+using AhamHr.Domain.Services.Implementations;
+using AhamHr.Domain.Services.Interfaces;
+using AhamHr.Web.Infrastructure;
+using AhamHr.Web.Infrastructure.AuthorizationRequirements;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
@@ -8,6 +16,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
 
@@ -30,6 +39,36 @@ namespace AhamHr.Web
             services.AddDbContext<AhamHrContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("AhamHrContext"))
             );
+
+            var jwtConfiguration = new JwtConfiguration();
+            Configuration.GetSection(nameof(JwtConfiguration)).Bind(jwtConfiguration);
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidIssuer = jwtConfiguration.Issuer,
+                        ValidateAudience = true,
+                        ValidAudience = jwtConfiguration.AudienceId,
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(jwtConfiguration.GetAudienceSecretBytes())
+                    };
+                });
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy(Policies.Admin, policy => policy.Requirements.Add(new RoleRequirement(UserRole.Admin)));
+                options.AddPolicy(Policies.Professor, policy => policy.Requirements.Add(new RoleRequirement(UserRole.Professor)));
+                options.AddPolicy(Policies.Student, policy => policy.Requirements.Add(new RoleRequirement(UserRole.Student)));
+            });
+
+            services.AddSingleton<IAuthorizationHandler, RoleRequirementHandler>();
+
+            services.Configure<JwtConfiguration>(Configuration.GetSection(nameof(JwtConfiguration)));
+
+            services.AddTransient<IClaimProvider, ClaimProvider>();
+            services.AddTransient<IJwtService, JwtService>();
 
             services.AddTransient<IAppointmentRepository, AppointmentRepository>();
             services.AddTransient<IProfessorRepository, ProfessorRepository>();
