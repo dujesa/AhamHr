@@ -1,5 +1,7 @@
 ﻿using AhamHr.Data.Entities.Models;
 using AhamHr.Domain.Repositories.Interfaces;
+using AhamHr.Web.Infrastructure;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -23,6 +25,7 @@ namespace AhamHr.Web.Controllers
             return Ok(_subjectRepository.GetAllSubjects());
         }
 
+        [Authorize(Policy = Policies.Admin)]
         [HttpPost(nameof(AddSubject))]
         public IActionResult AddSubject(Subject subjectToAdd)
         {
@@ -33,6 +36,7 @@ namespace AhamHr.Web.Controllers
            
         }
 
+        [Authorize(Policy = Policies.Admin)]
         [HttpPost(nameof(EditSubject))]
         public IActionResult EditSubject(Subject edittedSubject)
         {
@@ -41,7 +45,8 @@ namespace AhamHr.Web.Controllers
                 return Ok();
             return NotFound();
         }
-
+        
+        [Authorize(Policy = Policies.Admin)]
         [HttpDelete(nameof(DeleteSubject))]
         public IActionResult DeleteSubject([FromRoute] int id)
         {
