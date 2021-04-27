@@ -13,11 +13,11 @@ namespace AhamHr.Web.Controllers
 {
     public class SubjectController : ApiController
     {
+        private readonly ISubjectRepository _subjectRepository;
         public SubjectController(ISubjectRepository subjectRepository)
         {
             _subjectRepository = subjectRepository;
         }
-        private readonly ISubjectRepository _subjectRepository;
 
         [HttpGet(nameof(GetAllSubjects))]
         public IActionResult GetAllSubjects()

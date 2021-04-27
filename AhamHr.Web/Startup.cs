@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -35,6 +36,8 @@ namespace AhamHr.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+
+            services.AddSwaggerGen();
             
             services.AddDbContext<AhamHrContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("AhamHrContext"))
@@ -64,6 +67,7 @@ namespace AhamHr.Web
             });
 
             services.AddSingleton<IAuthorizationHandler, RoleRequirementHandler>();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             services.Configure<JwtConfiguration>(Configuration.GetSection(nameof(JwtConfiguration)));
 
@@ -72,6 +76,7 @@ namespace AhamHr.Web
 
             services.AddTransient<IAppointmentRepository, AppointmentRepository>();
             services.AddTransient<IProfessorRepository, ProfessorRepository>();
+            services.AddTransient<IStudentRepository, StudentRepository>();
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<ISubjectRepository, SubjectRepository>();
 
@@ -94,6 +99,8 @@ namespace AhamHr.Web
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseSwagger();
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "AhamHr v1"));
             }
             else
             {

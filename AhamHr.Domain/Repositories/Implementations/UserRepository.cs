@@ -40,5 +40,14 @@ namespace AhamHr.Domain.Repositories.Implementations
                 ? new ResponseResult<User>(user)
                 : ResponseResult<User>.Error("Invalid credentials");
         }
+
+        public ResponseResult CheckEmail(string emailToCheck)
+        {
+            var isEmailTaken = _dbContext.Users.Any(u => u.Email == emailToCheck.ToLower().Trim());
+
+            return isEmailTaken
+                ? ResponseResult.Error($"{emailToCheck} is already taken")
+                : ResponseResult.Ok;
+        }
     }
 }

@@ -14,4 +14,8 @@
     <ProjectReference Include="..\AhamHr.Data\AhamHr.Data.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\ViewModels\Student\" />
+  </ItemGroup>
+
 </Project>

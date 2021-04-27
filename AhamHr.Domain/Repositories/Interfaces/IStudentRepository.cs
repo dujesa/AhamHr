@@ -9,10 +9,8 @@ using System.Threading.Tasks;
 
 namespace AhamHr.Domain.Repositories.Interfaces
 {
-    public interface IUserRepository
+    public interface IStudentRepository
     {
-        User GetUser(int userId);
-        ResponseResult<User> GetUserIfValidCredentials(CredentialsModel credentialsModel);
-        public ResponseResult CheckEmail(string emailToCheck);
+        public ResponseResult<Student> RegisterStudent(RegistrationModel registrationModel);
     }
 }

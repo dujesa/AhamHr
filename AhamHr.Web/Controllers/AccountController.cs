@@ -35,5 +35,14 @@ namespace AhamHr.Web.Controllers
             var token = _jwtService.GetJwtTokenForUser(user);
             return Ok(token);
         }
+
+        [AllowAnonymous]
+        [HttpGet(nameof(RefreshToken))]
+        public ActionResult<string> RefreshToken([FromQuery] string token)
+        {
+            var newToken = _jwtService.GetNewToken(token);
+
+            return Ok(newToken);
+        }
     }
 }
