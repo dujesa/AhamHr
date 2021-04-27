@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace AhamHr.Domain.Repositories.Interfaces
 {
-    public interface IStudentRepository
+    public interface IStudentRepository : IUserRepository
     {
         public ResponseResult<Student> RegisterStudent(RegistrationModel registrationModel);
     }

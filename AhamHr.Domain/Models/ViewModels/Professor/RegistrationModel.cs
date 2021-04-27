@@ -10,7 +10,6 @@ namespace AhamHr.Domain.Models.ViewModels.Professor
     public class ProfessorRegistrationModel : RegistrationModel
     {
         public string PhotoPath { get; set; }
-        public string PhoneNumber { get; set; }
         public string Address { get; set; }
     }
 }

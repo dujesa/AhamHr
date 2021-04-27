@@ -4,14 +4,16 @@ using AhamHr.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AhamHr.Data.Migrations
 {
     [DbContext(typeof(AhamHrContext))]
-    partial class AhamHrContextModelSnapshot : ModelSnapshot
+    [Migration("20210427160212_UpdateUserModels")]
+    partial class UpdateUserModels
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
