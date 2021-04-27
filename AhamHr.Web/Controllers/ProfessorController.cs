@@ -38,6 +38,15 @@ namespace AhamHr.Web.Controllers
 
             var token = _jwtService.GetJwtTokenForUser(registerProfessorResponse.Data);
             return Ok(token);
+        }  
+        
+        [AllowAnonymous]
+        [HttpGet(nameof(GetAllProfessorsBySubjects))]
+        public ActionResult<string> GetAllProfessorsBySubjects()
+        {
+            var subjectIds = new List<int> { 1, 2, 3, 4 };
+            var professorsBySubjects = _professorRepository.GetAllBySubjectIds(subjectIds);
+            return Ok(professorsBySubjects);
         }
     }
 }

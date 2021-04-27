@@ -1,6 +1,8 @@
 ﻿using AhamHr.Data.Entities;
 using AhamHr.Data.Entities.Models;
+using AhamHr.Domain.Models.ViewModels.Subject;
 using AhamHr.Domain.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,68 +13,75 @@ namespace AhamHr.Domain.Repositories.Implementations
 {
     public class SubjectRepository : ISubjectRepository
     {
-        public SubjectRepository(AhamHrContext context)
+        private readonly AhamHrContext _dbContext;
+
+        public SubjectRepository(AhamHrContext dbContext)
         {
-            _context = context;
+            _dbContext = dbContext;
         }
 
-        private readonly AhamHrContext _context;
 
         public bool AddSubject(Subject subjectToAdd)
         {
-            var doesSubjectExist = _context.Subjects.Any(subject => 
+            var doesSubjectExist = _dbContext.Subjects.Any(subject =>
                 string.Equals(subject.Name, subjectToAdd.Name, StringComparison.CurrentCultureIgnoreCase));
 
             if (subjectToAdd.Name.Length < 3 || doesSubjectExist)
                 return false;
 
-            _context.Subjects.Add(subjectToAdd);
-            _context.SaveChanges();
+            _dbContext.Subjects.Add(subjectToAdd);
+            _dbContext.SaveChanges();
 
             return true;
         }
 
         public bool DeleteSubject(int idOfSubjectToDelete)
         {
-            var subjectToDelete = _context.Subjects.Find(idOfSubjectToDelete);
+            var subjectToDelete = _dbContext.Subjects.Find(idOfSubjectToDelete);
 
             if (subjectToDelete == null)
                 return false;
 
-            _context.Remove(subjectToDelete);
-            _context.SaveChanges();
+            _dbContext.Remove(subjectToDelete);
+            _dbContext.SaveChanges();
 
             return true;
         }
 
         public bool EditSubject(Subject edittedSubject)
         {
-            var doesEdittedSubjectExist = _context.Subjects.Any(subject =>
+            var doesEdittedSubjectExist = _dbContext.Subjects.Any(subject =>
                 string.Equals(subject.Name, edittedSubject.Name, StringComparison.CurrentCultureIgnoreCase));
 
             if (edittedSubject.Name.Length < 3 || doesEdittedSubjectExist)
                 return false;
 
-            var subjectToEdit = _context.Subjects.Find(edittedSubject.Id);
+            var subjectToEdit = _dbContext.Subjects.Find(edittedSubject.Id);
 
             if (subjectToEdit == null)
                 return false;
 
             subjectToEdit.Name = edittedSubject.Name;
 
-            _context.SaveChanges();
+            _dbContext.SaveChanges();
 
             return true;
         }
 
-        public List<Subject> GetAllSubjects()
+        public ICollection<SubjectModel> GetAllSubjects()
         {
-            return _context.Subjects.ToList();
+            return _dbContext.Subjects
+                .AsNoTracking()
+                .Select(s => new SubjectModel
+                {
+                    Name = s.Name,
+                })
+                .ToList();
         }
 
         public Subject GetSubjectById(int id)
         {
-            var subjectWithSearchingId = _context.Subjects.Find(id);
+            var subjectWithSearchingId = _dbContext.Subjects.Find(id);
 
             return subjectWithSearchingId;
         }

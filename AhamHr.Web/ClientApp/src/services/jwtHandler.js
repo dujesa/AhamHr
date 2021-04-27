@@ -1,4 +1,5 @@
 import axios from "axios";
+import { useHistory } from "react-router-dom";
 
 export const getJwtToken = () => {
   localStorage.getItem("token");
@@ -20,6 +21,8 @@ export const handleRedirectToLogin = () => {
   localStorage.removeItem("token");
   localStorage.removeItem("refreshToken");
   localStorage.removeItem("userId");
+
+  let history = useHistory();
   history.push("/login");
 };
 

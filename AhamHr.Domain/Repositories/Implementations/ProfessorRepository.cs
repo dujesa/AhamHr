@@ -6,6 +6,7 @@ using AhamHr.Domain.Helpers;
 using AhamHr.Domain.Models.ViewModels.Professor;
 using AhamHr.Domain.Repositories.Interfaces;
 using AhamHr.Domain.Services.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,6 +40,21 @@ namespace AhamHr.Domain.Repositories.Implementations
             _dbContext.SaveChanges();
 
             return new ResponseResult<Professor>(professor);
+        }
+
+        public ICollection<ProfessorInfoModel> GetAllBySubjectIds(ICollection<int> subjectIds)
+        {
+            return _dbContext.Professors
+                .Include(p => p.ProfessorSubjects.Where(
+                    ps => subjectIds.Contains(ps.SubjectId))
+                )
+                .Select(p => new ProfessorInfoModel
+                {
+                    FirstName = p.FirstName,
+                    LastName = p.LastName,
+                    Rating = p.Rating ?? 0,
+                })
+                .ToList();
         }
     }
 }

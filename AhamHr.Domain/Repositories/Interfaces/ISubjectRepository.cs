@@ -1,4 +1,5 @@
 ﻿using AhamHr.Data.Entities.Models;
+using AhamHr.Domain.Models.ViewModels.Subject;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace AhamHr.Domain.Repositories.Interfaces
 {
     public interface ISubjectRepository
     {
-        List<Subject> GetAllSubjects();
+        ICollection<SubjectModel> GetAllSubjects();
         bool AddSubject(Subject subjectToAdd);
         bool EditSubject(Subject edittedSubject);
         bool DeleteSubject(int idOfSubjectToDelete);
