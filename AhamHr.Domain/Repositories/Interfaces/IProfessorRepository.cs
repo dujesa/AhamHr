@@ -12,6 +12,6 @@ namespace AhamHr.Domain.Repositories.Interfaces
     public interface IProfessorRepository : IUserRepository
     {
         public ResponseResult<Professor> RegisterProfessor(ProfessorRegistrationModel registrationModel);
-        public ICollection<ProfessorInfoModel> GetAllBySubjectIds(ICollection<int> subjectIds);
+        public ICollection<ProfessorInfoModel> GetFilteredProfessors(ProfessorFilterModel filterModel);
     }
 }

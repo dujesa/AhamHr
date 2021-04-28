@@ -42,11 +42,10 @@ namespace AhamHr.Web.Controllers
         
         [AllowAnonymous]
         [HttpGet(nameof(GetAllProfessorsBySubjects))]
-        public ActionResult<string> GetAllProfessorsBySubjects()
+        public ActionResult<string> GetAllProfessorsBySubjects([FromQuery]ProfessorFilterModel filterModel)
         {
-            var subjectIds = new List<int> { 1, 2, 3, 4 };
-            var professorsBySubjects = _professorRepository.GetAllBySubjectIds(subjectIds);
-            return Ok(professorsBySubjects);
+            var filteredProfessors = _professorRepository.GetFilteredProfessors(filterModel);
+            return Ok(filteredProfessors);
         }
     }
 }

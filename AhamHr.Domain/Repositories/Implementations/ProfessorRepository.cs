@@ -42,12 +42,21 @@ namespace AhamHr.Domain.Repositories.Implementations
             return new ResponseResult<Professor>(professor);
         }
 
-        public ICollection<ProfessorInfoModel> GetAllBySubjectIds(ICollection<int> subjectIds)
+        public ICollection<ProfessorInfoModel> GetFilteredProfessors(ProfessorFilterModel filterModel)
         {
-            return _dbContext.Professors
-                .Include(p => p.ProfessorSubjects.Where(
-                    ps => subjectIds.Contains(ps.SubjectId))
-                )
+            var filteredProfessors = _dbContext.Professors
+                .Where(p => p.Rating >= filterModel.MinimalRating);
+
+            if (filterModel.SubjectIds.Any())
+            {
+                filteredProfessors = filteredProfessors
+                    .Include(p => p.ProfessorSubjects.Where(
+                        ps => filterModel.SubjectIds.Contains(ps.SubjectId))
+                    )
+                    .Where(p => p.ProfessorSubjects.Count > 0);
+            }
+
+            return filteredProfessors
                 .Select(p => new ProfessorInfoModel
                 {
                     FirstName = p.FirstName,
