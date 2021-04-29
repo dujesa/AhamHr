@@ -7,8 +7,22 @@ export const validateEmail = (email) =>
 
 export const areEqual = (first, second) => first === second;
 
-export const isStatusOk = ({ status }) => status === 200;
+export const isStatusOk = (response) => {
+  return !!response && response.status === 200;
+};
 
+export const validateUserForLogin = ({ email, password }) => {
+  if (!validateEmail(email)) {
+    alert("Invalid email address!");
+    return false;
+  }
+
+  if (!validateLength(password, 5)) {
+    alert("Password must contain at least 6 characters!");
+    return false;
+  }
+  return true;
+};
 export const validateUser = ({
   firstName,
   lastName,

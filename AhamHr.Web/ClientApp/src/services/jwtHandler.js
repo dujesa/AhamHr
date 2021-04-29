@@ -1,9 +1,7 @@
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 
-export const getJwtToken = () => {
-  localStorage.getItem("token");
-};
+export const getJwtToken = () => localStorage.getItem("token");
 
 export const getRefreshToken = () => {
   localStorage.getItem("refreshToken");
@@ -63,11 +61,7 @@ export const post = async (url, payload) => {
     .then((r) => {
       return r;
     })
-    .catch((r) => {
-      if (r.response.status === 401) {
-        //refresh();
-      }
-    });
+    .catch((r) => r.response);
 };
 
 export const get = async (url, payload) => {

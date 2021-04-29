@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { registerUser } from "../../services/data";
-import { post, saveJwtToken } from "../../services/jwtHandler";
+import { saveJwtToken } from "../../services/jwtHandler";
 import { constructUser } from "../../utils/defaults";
 import { validateUser } from "../../utils/validation";
 

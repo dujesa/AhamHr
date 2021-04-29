@@ -6,6 +6,7 @@ import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 import Layout from "./components/Layout";
 import RegistrationForm from "./components/Authentication/RegistrationForm";
 import Subjects from "./components/Subjects/Subjects";
+import LoginForm from "./components/Authentication/LoginForm";
 
 const App = () => {
   
@@ -13,7 +14,7 @@ const App = () => {
   return (
     <div>
       <Layout>
-        <RegistrationForm />
+        <LoginForm />
       </Layout>
     </div>
     /*<ErrorProvider>
