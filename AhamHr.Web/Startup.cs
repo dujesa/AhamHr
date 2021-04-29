@@ -131,6 +131,7 @@ namespace AhamHr.Web
 
                 if (env.IsDevelopment())
                 {
+                    //spa.Options.StartupTimeout = TimeSpan.FromSeconds(120);
                     spa.UseReactDevelopmentServer(npmScript: "start");
                 }
             });
