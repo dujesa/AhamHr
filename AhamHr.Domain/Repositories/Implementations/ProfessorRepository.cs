@@ -3,6 +3,7 @@ using AhamHr.Data.Entities.Models;
 using AhamHr.Data.Enums;
 using AhamHr.Domain.Abstractions;
 using AhamHr.Domain.Helpers;
+using AhamHr.Domain.Models.ViewModels.AvailableTermin;
 using AhamHr.Domain.Models.ViewModels.Professor;
 using AhamHr.Domain.Repositories.Interfaces;
 using AhamHr.Domain.Services.Interfaces;
@@ -65,6 +66,26 @@ namespace AhamHr.Domain.Repositories.Implementations
                     Rating = p.Rating ?? 0,
                 })
                 .ToList();
+        }
+
+        public ProfessorDetailsModel GetProfessorById(int id)
+        {
+            var professorAvailableTermins = _dbContext.AvailableTermins.Where(at => at.ProfessorId == id).Select(at => new AvailableTerminModel {
+                StartTime = at.StartTime,
+                EndTime = at.EndTime,
+            }).ToList();
+
+            return _dbContext.Professors
+                .Where(p => p.Id == id)
+                .Select(p => new ProfessorDetailsModel
+                { 
+                    Id = p.Id,
+                    FirstName = p.FirstName,
+                    LastName = p.LastName,
+                    Rating = p.Rating ?? 0,
+                    AvailableTermins = professorAvailableTermins,
+                })
+                .FirstOrDefault();
         }
     }
 }

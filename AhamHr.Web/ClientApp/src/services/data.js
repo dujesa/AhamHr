@@ -36,3 +36,17 @@ export const getProfessors = async (filters) => {
 
   return response.data;
 };
+
+export const getProfessorById = async (id) => {
+  const response = await get("/api/Professor/GetProfessorById", {
+    params: {
+      id: id,
+    },
+  });
+
+  if (!isStatusOk(response)) {
+    throw new Error();
+  }
+
+  return response.data;
+};

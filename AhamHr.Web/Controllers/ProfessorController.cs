@@ -38,8 +38,19 @@ namespace AhamHr.Web.Controllers
 
             var token = _jwtService.GetJwtTokenForUser(registerProfessorResponse.Data);
             return Ok(token);
-        }  
-        
+        }
+
+        [AllowAnonymous]
+        [HttpGet(nameof(GetProfessorById))]
+        public IActionResult GetProfessorById(int id)
+        {
+            var professor = _professorRepository.GetProfessorById(id);
+            if (professor != null)
+                return Ok(professor);
+            return NotFound();
+        }
+
+
         [AllowAnonymous]
         [HttpGet(nameof(GetFilteredProfessors))]
         public ActionResult<string> GetFilteredProfessors([FromQuery]ProfessorFilterModel filterModel)

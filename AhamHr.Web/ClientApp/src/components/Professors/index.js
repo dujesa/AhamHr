@@ -5,7 +5,7 @@ import ProfessorDetails from "./ProfessorDetails";
 const Professors = () => {
   return (
     <Switch>
-      <Route exact path="/professor/:id">
+      <Route exact path="/professors/:id">
         <ProfessorDetails />
       </Route>
     </Switch>

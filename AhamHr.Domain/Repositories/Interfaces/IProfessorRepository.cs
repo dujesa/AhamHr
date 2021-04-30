@@ -13,5 +13,6 @@ namespace AhamHr.Domain.Repositories.Interfaces
     {
         public ResponseResult<Professor> RegisterProfessor(ProfessorRegistrationModel registrationModel);
         public ICollection<ProfessorInfoModel> GetFilteredProfessors(ProfessorFilterModel filterModel);
+        public ProfessorDetailsModel GetProfessorById(int id);
     }
 }
