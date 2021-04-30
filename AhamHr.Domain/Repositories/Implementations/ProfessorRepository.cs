@@ -59,6 +59,7 @@ namespace AhamHr.Domain.Repositories.Implementations
             return filteredProfessors
                 .Select(p => new ProfessorInfoModel
                 {
+                    Id = p.Id,
                     FirstName = p.FirstName,
                     LastName = p.LastName,
                     Rating = p.Rating ?? 0,

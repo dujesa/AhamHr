@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { loginUser } from "../../services/data";
 import { getJwtToken, saveJwtToken } from "../../services/jwtHandler";
 import { constructUser } from "../../utils/defaults";
@@ -42,7 +43,10 @@ const LoginForm = () => {
           onChange={handleInputChange}
         />
       </form>
-      <button onClick={handleLogin}>Prijava</button>
+      <button onClick={handleLogin}>prijava</button>
+      <p>
+        Nemaš račun?<Link to="/auth/register">Registriraj se.</Link>
+      </p>
     </div>
   );
 };

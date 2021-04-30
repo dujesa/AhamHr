@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
+
 import { registerUser } from "../../services/data";
 import { saveJwtToken } from "../../services/jwtHandler";
 import { constructUser } from "../../utils/defaults";
@@ -28,7 +30,7 @@ const RegistrationForm = () => {
       return;
     }
 
-    const token =  await registerUser(user);
+    const token = await registerUser(user);
     saveJwtToken(token);
   };
 
@@ -98,6 +100,9 @@ const RegistrationForm = () => {
         </label>
       </form>
       <button onClick={handleRegistration}>Registriraj se</button>
+      <p>
+        Nemaš račun?<Link to="/auth/login">Prijavi se.</Link>
+      </p>
     </div>
   );
 };

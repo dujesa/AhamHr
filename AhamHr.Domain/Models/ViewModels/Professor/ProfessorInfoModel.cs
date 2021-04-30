@@ -8,6 +8,7 @@ namespace AhamHr.Domain.Models.ViewModels.Professor
 {
     public class ProfessorInfoModel
     {
+        public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public decimal Rating { get; set; }

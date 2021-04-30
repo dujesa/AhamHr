@@ -41,8 +41,8 @@ namespace AhamHr.Web.Controllers
         }  
         
         [AllowAnonymous]
-        [HttpGet(nameof(GetAllProfessorsBySubjects))]
-        public ActionResult<string> GetAllProfessorsBySubjects([FromQuery]ProfessorFilterModel filterModel)
+        [HttpGet(nameof(GetFilteredProfessors))]
+        public ActionResult<string> GetFilteredProfessors([FromQuery]ProfessorFilterModel filterModel)
         {
             var filteredProfessors = _professorRepository.GetFilteredProfessors(filterModel);
             return Ok(filteredProfessors);
