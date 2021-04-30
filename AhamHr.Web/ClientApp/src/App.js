@@ -3,39 +3,26 @@ import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 //import { Provider } from "react-redux";
 //import store from "./redux";
 
-import Layout from "./components/Layout";
-import RegistrationForm from "./components/Authentication/RegistrationForm";
-import Subjects from "./components/Subjects/Subjects";
-import LoginForm from "./components/Authentication/LoginForm";
+import Landing from "./components/Landing";
+import NotFound from "./components/NotFound";
+import Authentication from "./components/Authentication";
 
 const App = () => {
-  
-
   return (
-    <div>
-      <Layout>
-        <LoginForm />
-      </Layout>
-    </div>
-    /*<ErrorProvider>
-      <BrowserRouter>
-        <Switch>
-          <Route path="/subjects">
-              <Subjects />
-          </Route>
-          <Route path="/subjects">
-            <ProfessorProvider>
-              <Professors />
-            </ProfessorProvider>
-          </Route>
-          <Route path="/404">
-            <NotFound />
-          </Route>
-          <Redirect to="/404" />
-        </Switch>
-        <Error />
-      </BrowserRouter>
-    </ErrorProvider>*/
+    <BrowserRouter>
+      <Switch>
+        <Route exact path="/">
+          <Landing />
+        </Route>
+        <Route path="/auth">
+          <Authentication />
+        </Route>
+        <Route to="/404">
+          <NotFound />
+        </Route>
+        <Redirect to="/404" />
+      </Switch>
+    </BrowserRouter>
   );
 };
 

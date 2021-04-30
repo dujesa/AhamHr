@@ -1,14 +1,16 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
-const Header = () => {
-    return <header>
-        <h1>Aham.hr</h1>
-        <nav>
-            <p>link tamo</p>
-            <p>link vamo</p>
-            <p>link namo</p>
-        </nav>
+const Header = ({ backLink, button }) => {
+
+  return (
+    <header>
+      <nav>
+        {!!backLink && <Link to={backLink}>&lt;</Link>}
+        {!!button && button}
+      </nav>
     </header>
+  );
 };
 
 export default Header;
