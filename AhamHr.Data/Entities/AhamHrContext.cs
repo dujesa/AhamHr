@@ -54,7 +54,7 @@ namespace AhamHr.Data.Entities
                 .WithMany(s => s.StudentAppointments)
                 .HasForeignKey(sa => sa.StudentId);
             modelBuilder.Entity<StudentAppointment>()
-                .HasOne(sa => sa.Student)
+                .HasOne(sa => sa.Appointment)
                 .WithMany(a => a.StudentAppointments)
                 .HasForeignKey(sa => sa.AppointmentId);
 

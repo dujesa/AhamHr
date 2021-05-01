@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AhamHr.Data.Migrations
 {
     [DbContext(typeof(AhamHrContext))]
-    [Migration("20210424122709_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20210501115326_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -114,9 +114,6 @@ namespace AhamHr.Data.Migrations
                     b.Property<int>("AppointmentId")
                         .HasColumnType("int");
 
-                    b.Property<int>("AppointmentId1")
-                        .HasColumnType("int");
-
                     b.Property<int>("Rating")
                         .HasColumnType("int");
 
@@ -126,8 +123,6 @@ namespace AhamHr.Data.Migrations
                     b.HasKey("StudentId", "AppointmentId");
 
                     b.HasIndex("AppointmentId");
-
-                    b.HasIndex("AppointmentId1");
 
                     b.ToTable("StudentAppointments");
                 });
@@ -166,6 +161,9 @@ namespace AhamHr.Data.Migrations
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("UserRole")
                         .HasColumnType("int");
 
@@ -199,7 +197,7 @@ namespace AhamHr.Data.Migrations
                     b.Property<string>("PhotoPath")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("Rating")
+                    b.Property<decimal?>("Rating")
                         .HasColumnType("decimal(18,4)");
 
                     b.HasDiscriminator().HasValue(1);
@@ -253,15 +251,15 @@ namespace AhamHr.Data.Migrations
 
             modelBuilder.Entity("AhamHr.Data.Entities.Models.StudentAppointment", b =>
                 {
-                    b.HasOne("AhamHr.Data.Entities.Models.Student", "Student")
+                    b.HasOne("AhamHr.Data.Entities.Models.Appointment", "Appointment")
                         .WithMany("StudentAppointments")
                         .HasForeignKey("AppointmentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("AhamHr.Data.Entities.Models.Appointment", "Appointment")
+                    b.HasOne("AhamHr.Data.Entities.Models.Student", "Student")
                         .WithMany("StudentAppointments")
-                        .HasForeignKey("AppointmentId1")
+                        .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

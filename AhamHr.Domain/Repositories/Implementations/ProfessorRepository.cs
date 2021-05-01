@@ -5,6 +5,7 @@ using AhamHr.Domain.Abstractions;
 using AhamHr.Domain.Helpers;
 using AhamHr.Domain.Models.ViewModels.AvailableTermin;
 using AhamHr.Domain.Models.ViewModels.Professor;
+using AhamHr.Domain.Models.ViewModels.Subject;
 using AhamHr.Domain.Repositories.Interfaces;
 using AhamHr.Domain.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -70,10 +71,22 @@ namespace AhamHr.Domain.Repositories.Implementations
 
         public ProfessorDetailsModel GetProfessorById(int id)
         {
-            var professorAvailableTermins = _dbContext.AvailableTermins.Where(at => at.ProfessorId == id).Select(at => new AvailableTerminModel {
-                StartTime = at.StartTime,
-                EndTime = at.EndTime,
-            }).ToList();
+            var professorAvailableTermins = _dbContext.AvailableTermins
+                .Where(at => at.ProfessorId == id)
+                .Select(at => new AvailableTerminModel 
+                {
+                    StartTime = at.StartTime,
+                    EndTime = at.EndTime,
+                })
+                .ToList();
+
+            var professorSubjects = _dbContext.Subjects
+                .Include(s => s.ProfessorSubjects.Where(ps => ps.ProfessorId == id))
+                .Select(s => new SubjectModel
+                { 
+                    Name = s.Name,
+                })
+                .ToList();
 
             return _dbContext.Professors
                 .Where(p => p.Id == id)
@@ -84,6 +97,7 @@ namespace AhamHr.Domain.Repositories.Implementations
                     LastName = p.LastName,
                     Rating = p.Rating ?? 0,
                     AvailableTermins = professorAvailableTermins,
+                    Subjects = professorSubjects
                 })
                 .FirstOrDefault();
         }

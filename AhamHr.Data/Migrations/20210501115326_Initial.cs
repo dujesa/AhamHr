@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace AhamHr.Data.Migrations
 {
-    public partial class InitialMigration : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -30,6 +30,7 @@ namespace AhamHr.Data.Migrations
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     EncryptedPassword = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserRole = table.Column<int>(type: "int", nullable: false),
                     PhotoPath = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Rating = table.Column<decimal>(type: "decimal(18,4)", nullable: true),
@@ -122,7 +123,6 @@ namespace AhamHr.Data.Migrations
                 {
                     StudentId = table.Column<int>(type: "int", nullable: false),
                     AppointmentId = table.Column<int>(type: "int", nullable: false),
-                    AppointmentId1 = table.Column<int>(type: "int", nullable: false),
                     Rating = table.Column<int>(type: "int", nullable: false),
                     Review = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
@@ -130,14 +130,14 @@ namespace AhamHr.Data.Migrations
                 {
                     table.PrimaryKey("PK_StudentAppointments", x => new { x.StudentId, x.AppointmentId });
                     table.ForeignKey(
-                        name: "FK_StudentAppointments_Appointments_AppointmentId1",
-                        column: x => x.AppointmentId1,
+                        name: "FK_StudentAppointments_Appointments_AppointmentId",
+                        column: x => x.AppointmentId,
                         principalTable: "Appointments",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_StudentAppointments_Users_AppointmentId",
-                        column: x => x.AppointmentId,
+                        name: "FK_StudentAppointments_Users_StudentId",
+                        column: x => x.StudentId,
                         principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -162,11 +162,6 @@ namespace AhamHr.Data.Migrations
                 name: "IX_StudentAppointments_AppointmentId",
                 table: "StudentAppointments",
                 column: "AppointmentId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_StudentAppointments_AppointmentId1",
-                table: "StudentAppointments",
-                column: "AppointmentId1");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
