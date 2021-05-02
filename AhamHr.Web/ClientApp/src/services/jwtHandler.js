@@ -43,6 +43,8 @@ export const handleRedirectToLogin = () => {
 
   //const history = useHistory();
   //history.push("/login");
+  window.location.replace("/auth/login");
+
 };
 
 export const refresh = () => {

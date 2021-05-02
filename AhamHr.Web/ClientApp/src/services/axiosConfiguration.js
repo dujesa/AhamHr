@@ -1,9 +1,9 @@
 import axios from "axios";
-import { getJwtToken, handleRedirectToLogin, saveJwtToken } from "./jwtHandler";
+import { getJwtToken, handleRedirectToLogin, refresh, saveJwtToken } from "./jwtHandler";
 
 const configureForRequest = () => {
   axios.interceptors.request.use((config) => {
-    const token = `Bearer ${localStorage.getItem("token")}`;
+    const token = `Bearer ${getJwtToken()}`;
     config.headers["Authorization"] = token;
 
     return config;
@@ -24,7 +24,7 @@ const configureForResponse = () => {
       if (token && originalRequest && !originalRequest._isRetryRequest) {
         originalRequest._isRetryRequest = true;
 
-        return newToken(token).then(({ data }) => {
+        return refresh().then(({ data }) => {
           if (!data) {
             handleRedirectToLogin();
             return;

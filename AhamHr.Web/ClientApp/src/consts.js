@@ -8,3 +8,13 @@ export const User = {
     termsAndConditions: "termsAndConditions",
     newsletter: "newsletter",
 };
+
+export const Appointment = {
+    startTime: "startTime",
+    endTime: "endTime",
+    literature: "literature",
+    comment: "comment",
+    appointmentType: "appointmentType",
+    professorId: "professorId",
+
+}; 

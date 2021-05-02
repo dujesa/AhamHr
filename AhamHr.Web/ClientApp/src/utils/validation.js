@@ -23,6 +23,7 @@ export const validateUserForLogin = ({ email, password }) => {
   }
   return true;
 };
+
 export const validateUser = ({
   firstName,
   lastName,
@@ -52,6 +53,35 @@ export const validateUser = ({
 
   if (!areEqual(password, repeatedPassword)) {
     alert("Password and repeated password do not match!");
+    return false;
+  }
+
+  return true;
+};
+
+export const validateAppointment = ({
+  startTime,
+  endTime,
+  literature,
+  comment,
+}) => {
+  if (startTime === "") {
+    alert("Start time input cannot be empty!");
+    return false;
+  }
+
+  if (endTime === "") {
+    alert("End time input cannot be empty!");
+    return false;
+  }
+
+  if (literature === "") {
+    alert("Literature input cannot be empty!");
+    return false;
+  }
+
+  if (comment === "") {
+    alert("Comment input cannot be empty!");
     return false;
   }
 

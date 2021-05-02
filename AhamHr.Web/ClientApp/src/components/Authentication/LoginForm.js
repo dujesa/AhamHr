@@ -40,9 +40,8 @@ const LoginForm = () => {
     }
 
     saveJwtToken(token);
-    console.log(getJwtToken());
     //handle user role for profile type: student or professor
-    //history.push("/students/profile");
+    history.push("/students/profile");
   };
 
   return (

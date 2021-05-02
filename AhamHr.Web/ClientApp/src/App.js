@@ -10,6 +10,7 @@ import ErrorProvider from "./providers/error";
 import Error from "./components/Error";
 import Professors from "./components/Professors";
 import Students from "./components/Students";
+import CurrentUserProvider from "./providers/currentUser";
 
 const App = () => {
   return (
@@ -22,12 +23,14 @@ const App = () => {
           <Route path="/auth">
             <Authentication />
           </Route>
-          <Route path="/professors">
-            <Professors />
-          </Route>
-          <Route path="/students">
-            <Students />
-          </Route>
+          <CurrentUserProvider>
+            <Route path="/professors">
+              <Professors />
+            </Route>
+            <Route path="/students">
+              <Students />
+            </Route>
+          </CurrentUserProvider>
           <Route to="/404">
             <NotFound />
           </Route>

@@ -1,29 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 import { Redirect } from "react-router";
 import { useEffect } from "react/cjs/react.development";
 import { useCurrentUser } from "../../providers/currentUser/hooks";
 import { useErrorMessage } from "../../providers/error/hooks";
 import { getStudentProfileData } from "../../services/data";
-import { deleteJwtToken, getJwtToken } from "../../services/jwtHandler";
+import { getJwtToken } from "../../services/jwtHandler";
 
 const StudentProfile = () => {
   const [currentUser, setCurrentUser] = useCurrentUser();
   const [, setErrorMessage] = useErrorMessage();
 
   useEffect(() => {
-    console.log(getJwtToken())
-
-    if (getJwtToken() && !currentUser) {
+    if (!!getJwtToken() && !currentUser) {
       getStudentProfileData()
-        .then((userProfileData) => setCurrentUser(userProfileData))
+        .then(setCurrentUser)
         .catch(() => {
-          //Refresh has bug => refresh();
-          //deleteJwtToken();
           setErrorMessage("Failed fetching users profile data.");
         });
     }
 
-    if (!getJwtToken()) {
+    if (!currentUser) {
       return <Redirect to="/auth/login" />;
     }
   }, []);
@@ -37,8 +33,11 @@ const StudentProfile = () => {
       </h2>
       <p>{currentUser?.email}</p>
       {currentUser?.appointments.map((appointment) => (
-        <div>
-          {appointment.startDate}-{appointment.endDate}
+        <div key={appointment.id}>
+          <h2>{appointment.literature}</h2>
+          <p>
+            {appointment.startTime}-{appointment.endTime}
+          </p>
         </div>
       ))}
     </div>

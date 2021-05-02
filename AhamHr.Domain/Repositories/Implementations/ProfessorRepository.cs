@@ -75,6 +75,7 @@ namespace AhamHr.Domain.Repositories.Implementations
                 .Where(at => at.ProfessorId == id)
                 .Select(at => new AvailableTerminModel 
                 {
+                    Id = at.Id,
                     StartTime = at.StartTime,
                     EndTime = at.EndTime,
                 })

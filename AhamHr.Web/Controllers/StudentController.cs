@@ -40,7 +40,6 @@ namespace AhamHr.Web.Controllers
             return Ok(token);
         }
 
-        [Authorize(Policy = Policies.Student)]
         [HttpGet(nameof(GetProfileData))]
         public ActionResult<string> GetProfileData()
         {

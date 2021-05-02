@@ -1,6 +1,6 @@
 import axios from "axios";
 import { isStatusOk } from "../utils/validation";
-import { get, post } from "./jwtHandler";
+import { get, getJwtToken, post } from "./jwtHandler";
 
 export const registerUser = async (user) => {
   const response = await post("/api/Student/RegisterStudent", user);
@@ -32,7 +32,6 @@ export const getStudentProfileData = async () => {
   return response.data;
 };
 
-
 export const getProfessors = async (filters) => {
   const response = await get("/api/Professor/GetFilteredProfessors", {
     params: {
@@ -52,6 +51,20 @@ export const getProfessorById = async (id) => {
   const response = await get("/api/Professor/GetProfessorById", {
     params: {
       id: id,
+    },
+  });
+
+  if (!isStatusOk(response)) {
+    throw new Error();
+  }
+
+  return response.data;
+};
+
+export const bookAppointment = async (appointment) => {
+  const response = await get("/api/Appointment/Create", {
+    params: {
+      appointment: appointment,
     },
   });
 
