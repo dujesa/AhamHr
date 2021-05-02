@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect, useHistory } from "react-router-dom";
+
+import { useErrorMessage } from "../../providers/error/hooks";
 import { loginUser } from "../../services/data";
 import { getJwtToken, saveJwtToken } from "../../services/jwtHandler";
 import { constructUser } from "../../utils/defaults";
@@ -7,6 +9,16 @@ import { validateUserForLogin } from "../../utils/validation";
 
 const LoginForm = () => {
   const [user, setUser] = useState(constructUser());
+  const [, setErrorMessage] = useErrorMessage();
+  const history = useHistory();
+
+  useEffect(() => {
+    if (!getJwtToken()) {
+      return;
+    }
+
+    history.push("/students/profile");
+  }, []);
 
   const handleInputChange = ({ target: { name, value } }) => {
     setUser((prevUser) => ({
@@ -21,7 +33,16 @@ const LoginForm = () => {
     }
 
     const token = await loginUser(user);
+    if (!token) {
+      setErrorMessage("Login unsucessfull.");
+
+      return;
+    }
+
     saveJwtToken(token);
+    console.log(getJwtToken());
+    //handle user role for profile type: student or professor
+    //history.push("/students/profile");
   };
 
   return (

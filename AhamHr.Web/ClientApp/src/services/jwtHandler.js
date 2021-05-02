@@ -11,6 +11,10 @@ export const saveJwtToken = (token) => {
   localStorage.setItem("token", token);
 };
 
+export const deleteJwtToken = () => {
+  localStorage.removeItem("token");
+};
+
 export const saveRefreshToken = (refreshToken) => {
   localStorage.setItem("refreshToken", refreshToken);
 };

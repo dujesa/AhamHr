@@ -22,6 +22,17 @@ export const loginUser = async (user) => {
   return response.data;
 };
 
+export const getStudentProfileData = async () => {
+  const response = await get("/api/Student/GetProfileData");
+
+  if (!isStatusOk(response)) {
+    throw new Error();
+  }
+
+  return response.data;
+};
+
+
 export const getProfessors = async (filters) => {
   const response = await get("/api/Professor/GetFilteredProfessors", {
     params: {

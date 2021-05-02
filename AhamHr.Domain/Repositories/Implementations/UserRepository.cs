@@ -16,7 +16,7 @@ namespace AhamHr.Domain.Repositories.Implementations
     public class UserRepository : IUserRepository
     {
         protected readonly AhamHrContext _dbContext;
-        private readonly IClaimProvider _claimProvider;
+        protected readonly IClaimProvider _claimProvider;
         public UserRepository(AhamHrContext dbContext, IClaimProvider claimProvider)
         {
             _dbContext = dbContext;

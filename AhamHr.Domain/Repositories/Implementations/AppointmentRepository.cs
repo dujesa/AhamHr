@@ -63,18 +63,21 @@ namespace AhamHr.Domain.Repositories.Implementations
             
             return _dbContext.Appointments
                 .Include(a => a.StudentAppointments.Where(sa => sa.StudentId == studentId))
+                .Include(a => a.Professor)
                 .Select(a => new AppointmentInfoModel
                 {
                     StartTime = a.StartTime,
                     EndTime = a.EndTime,
                     Literature = a.Literature,
-                    Professor = new ProfessorInfoModel
-                    {
-                        Id = a.Professor.Id,
-                        FirstName = a.Professor.FirstName,
-                        LastName = a.Professor.LastName,
-                        Rating = a.Professor.Rating ?? 0,
-                    },
+                    Professor = a.Professor == null ?
+                        null :
+                        new ProfessorInfoModel
+                        {
+                            Id = a.Professor.Id,
+                            FirstName = a.Professor.FirstName,
+                            LastName = a.Professor.LastName,
+                            Rating = a.Professor.Rating ?? 0,
+                        },
                 })
                 .ToList();
         }

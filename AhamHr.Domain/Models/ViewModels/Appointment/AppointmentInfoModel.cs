@@ -15,6 +15,5 @@ namespace AhamHr.Domain.Models.ViewModels.Appointment
         public string Literature { get; set; }
         public ProfessorInfoModel Professor { get; set; }
         //public ICollection<StudentInfoModel> Subjects { get; set; }
-
     }
 }
